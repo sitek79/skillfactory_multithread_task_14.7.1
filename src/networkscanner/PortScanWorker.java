@@ -72,11 +72,12 @@ public class PortScanWorker implements Runnable {
                 InetSocketAddress isa = new InetSocketAddress(inetAddress,port);
                 Socket socket = new Socket();
                 socket.connect(isa,timeout);
-                System.out.println("Found opened port: " + port);
+                System.out.println("Найден открытый порт: " + port);
                 openPorts.add(port);
                 socket.close();
             } catch (IOException ioe) {
-                //System.out.println("");
+                // чтобы не получать ошибки по закрытым портам, это лучше закомментировать
+                //System.err.println("I/O exception");
             }
         }
         //System.out.println("FINISH, id = " + id);
