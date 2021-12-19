@@ -24,7 +24,8 @@ public class Main {
     public static void main(String[] args) {
         startTime = new Date();
 
-        processArgs(args);
+        //processArgs(args);
+        processArgs("172.16.11.1", "0-65535");
 
         if (allPorts.size()/MIN_PORTS_PER_THREAD > MAX_THREADS ) {
             final int PORTS_PER_THREAD = allPorts.size()/MAX_THREADS;
@@ -104,13 +105,17 @@ public class Main {
         }
     }
 
-    static void processArgs(String[] args) {
-        if (args.length < 1) {
+    //static void processArgs(String[] args) {
+    static void processArgs(String address, String ports) {
+        /*if (args.length < 1) {
             usage();
             System.exit(1);
-        }
+        }*/
 
-        String host = args[0];
+
+        //String host = args[0];
+        String host = address;
+
         try {
             inetAddress = InetAddress.getByName(host);
         } catch (IOException ioe) {
@@ -123,7 +128,7 @@ public class Main {
         int minPort = 0;
         int maxPort = 0x10000-1;
 
-        if (args.length==2) {
+        /*if (args.length==2) {
             if (args[1].indexOf("-")>-1) {
                 // range of ports pointed out
                 String[] ports = args[1].split("-");
@@ -144,8 +149,29 @@ public class Main {
                     System.exit(3);
                 }
             }
+        }*/
+        //
+        if (ports.contains("-")) {
+            // range of ports pointed out
+            String[] portsSelect = ports.split("-");
+            try {
+                minPort = Integer.parseInt(portsSelect[0]);
+                maxPort = Integer.parseInt(portsSelect[1]);
+            } catch (NumberFormatException nfe) {
+                System.out.println("Wrong ports!");
+                System.exit(3);
+            }
+        } else {
+            // one port pointed out
+            try {
+                minPort = Integer.parseInt(ports);
+                maxPort = minPort;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Wrong port!");
+                System.exit(3);
+            }
         }
-
+        //
         allPorts = new ArrayList<Integer>(maxPort-minPort+1);
 
         for (int i=minPort; i<=maxPort; i++) {
