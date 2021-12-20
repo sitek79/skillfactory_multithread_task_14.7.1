@@ -7,19 +7,19 @@ public class Main {
         //
         System.out.println("Поток Main запущен...");
         Runnable r = ()->{
-            System.out.printf("%s started... \n", Thread.currentThread().getName());
+            System.out.printf("%s запустился... \n", Thread.currentThread().getName());
             try{
                 //Thread.sleep(500);
                 CountDown launch = new CountDown(10);
                 launch.run();
             }
             catch(Exception e){
-                System.out.println("Thread has been interrupted");
+                System.out.println("Поток был прерван");
             }
-            System.out.printf("%s finished... \n", Thread.currentThread().getName());
+            System.out.printf("%s завершился... \n", Thread.currentThread().getName());
         };
-        Thread myThread = new Thread(r,"Программа сканирования");
-        myThread.start();
+        Thread myThread = new Thread(r,"Сетевой сканер");
+        //myThread.start();
         System.out.println("Поток Main завершился...");
         //
         //CountDown launch = new CountDown(10);
