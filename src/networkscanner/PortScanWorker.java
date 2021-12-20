@@ -52,7 +52,7 @@ public class PortScanWorker implements Runnable {
     }
 
     public void run() {
-        //System.out.println("Started thread with id = " + id);
+        System.out.println("Стартовал поток с id = " + id);
         scan(inetAddress);
         try {
             barrier.await();

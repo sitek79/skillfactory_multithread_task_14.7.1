@@ -24,8 +24,8 @@ public class ScanApp {
     public void scanUp() {
         startTime = new Date();
 
-        scanData("172.16.11.1", "0-65535");
-        //scanData("nettop.hm", "0-65535");
+        //scanData("172.16.11.1", "0-65535");
+        scanData("localhost", "0-65535");
 
         if (allPorts.size()/MIN_PORTS_PER_THREAD > MAX_THREADS ) {
             final int PORTS_PER_THREAD = allPorts.size()/MAX_THREADS;
@@ -72,7 +72,7 @@ public class ScanApp {
 
         Runnable summarizer = new Runnable() {
             public void run() {
-                System.out.println("Завершить сканирование...");
+                System.out.println("Сканирование завершено...");
 
                 for (PortScanWorker psw : workers) {
                     List<Integer> openPorts = psw.getOpenPorts();
@@ -98,7 +98,7 @@ public class ScanApp {
             psw.setBarrier(barrier);
         }
 
-        System.out.println("Начать сканирование...");
+        System.out.println("Сканирование запущено...");
 
         for (PortScanWorker psw : workers) {
             new Thread(psw).start();

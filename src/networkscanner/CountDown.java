@@ -1,7 +1,7 @@
 package networkscanner;
 
 public class CountDown implements Runnable {
-    protected int countDown = 10;
+    protected int countDown = 15;
     private static int taskCount = 0;
     private final int id = taskCount++;
     public CountDown() {}
@@ -16,6 +16,7 @@ public class CountDown implements Runnable {
     }
 
     public void run() {
+        System.out.println("А теперь выполняется поток: " + Message.currentThread().getName());
         while (countDown-- > 0) {
             System.out.println(status());
             Thread.yield();
